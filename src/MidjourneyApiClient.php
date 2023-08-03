@@ -10,13 +10,13 @@ use eDiasoft\Midjourney\Config\DefaultConfig;
 class MidjourneyApiClient
 {
     private Config $config;
-    public function __construct(int $channel_id, string $authToken)
+    public function __construct(int $channel_id, string $authToken, string $guild_id = null)
     {
-        $this->config = new DefaultConfig($channel_id, $authToken);
+        $this->config = new DefaultConfig($channel_id, $authToken, $guild_id);
     }
 
-    public function imagine()
+    public function imagine($prompt)
     {
-        return new Imagine($this->config);
+        return new Imagine($this->config, $prompt);
     }
 }

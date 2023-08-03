@@ -2,26 +2,23 @@
 
 namespace eDiasoft\Midjourney\Commands;
 
-use eDiasoft\Midjourney\HttpAdapter\HttpAdapterInterface;
-use eDiasoft\Midjourney\HttpAdapter\HttpAdapterPicker;
+use eDiasoft\Midjourney\HttpAdapter\Client;
 use eDiasoft\Midjourney\Config\Config;
 use eDiasoft\Midjourney\Resources\Discord;
-use eDiasoft\Midjourney\Resources\Http;
-use eDiasoft\Midjourney\Response\Transaction;
 
 class BaseCommand implements Builder
 {
     protected Config $config;
-
-    private HttpAdapterInterface $httpClient;
-
+    protected string $prompt;
     protected array $payload;
 
-    public function __construct(Config $config)
+    public function __construct(Config $config, string $prompt = '')
     {
         $this->config = $config;
 
-        $this->httpClient = (new HttpAdapterPicker())->pickHttpAdapter();
+        $this->prompt = $prompt;
+
+        $this->client = new Client($this->config);
 
         $this->defaultPayload();
     }
@@ -40,20 +37,10 @@ class BaseCommand implements Builder
 
     public function send()
     {
-        $response = $this->httpClient->send(
-            Http::POST, Discord::INTERACTIONS_URL,
-            [
-                'Authorization' => 'MzkyNDQ3NDEzNTIyMDA2MDE3.GZd1kb._d6zV5OHwMsz7AsZi6ERHAf8FjdoDFfaR9NrlE',
-                'Content-Type'  => 'application/x-www-form-urlencoded'
-            ],
-            [],
-            [
-                'payload_json'      => $this->payload()
-            ],
-            responseClass: Transaction::class
-        );
-
-
-        dd($response);
+        $this->client->setHeaders([
+            'Content-Type'  => 'application/x-www-form-urlencoded'
+        ])->post(Discord::INTERACTIONS_URL, [
+            'payload_json'      => $this->payload()
+        ]);
     }
 }

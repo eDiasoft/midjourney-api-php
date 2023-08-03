@@ -27,18 +27,20 @@ class GuzzleHttpAdapter implements HttpAdapterInterface
         $this->httpClient = $httpClient;
     }
 
-    public function send(string $httpMethod, string $url, array $headers = [], array $queries = [], $httpBody = null, string $responseClass = DefaultResponse::class)
+    public function send(string $httpMethod, string $url, array $headers = [], array $queries = [], array $form_params = [], string $responseClass = DefaultResponse::class)
     {
-        $request = new Request($httpMethod, $url, $headers, $httpBody);
-        dd($request);
+        $request = new Request($httpMethod, $url, $headers);
+
         $this->response = $responseClass;
 
         try {
             $response = $this->httpClient->send($request, [
-                'http_errors' => false,
-                'query'         => $queries
+                'http_errors'           => false,
+                'query'                 => $queries,
+                'form_params'           => $form_params
             ]);
         } catch (GuzzleException $e) {
+
             throw new ApiException($e->getMessage(), $e->getCode());
         }
 
@@ -68,7 +70,7 @@ class GuzzleHttpAdapter implements HttpAdapterInterface
 
         if (json_last_error() !== JSON_ERROR_NONE)
         {
-            throw new ApiException("Unable to decode Gomypay response: '{$body}'.");
+            throw new ApiException("Unable to decode Midjourney response: '{$body}'.");
         }
 
         return new $this->response($object);

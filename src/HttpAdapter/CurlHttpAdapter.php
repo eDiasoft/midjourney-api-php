@@ -4,10 +4,10 @@ namespace eDiasoft\Midjourney\HttpAdapter;
 
 use Composer\CaBundle\CaBundle;
 
-use eDiasoft\Gomypay\Response\DefaultResponse;
-use eDiasoft\Gomypay\Types\Http;
-use eDiasoft\Gomypay\Exceptions\ApiException;
-use eDiasoft\Gomypay\Exceptions\CurlConnectTimeoutException;
+use eDiasoft\Midjourney\Response\DefaultResponse;
+use eDiasoft\Midjourney\Resources\Http;
+use eDiasoft\Midjourney\Exceptions\ApiException;
+use eDiasoft\Midjourney\Exceptions\CurlConnectTimeoutException;
 
 final class CurlHttpAdapter implements HttpAdapterInterface
 {
@@ -18,7 +18,7 @@ final class CurlHttpAdapter implements HttpAdapterInterface
     public const DELAY_INCREASE_MS = 1000;
     private string $response;
 
-    public function send(string $httpMethod, string $url, array $headers = [], array $queries = [], string $httpBody = null, string $responseClass = DefaultResponse::class)
+    public function send(string $httpMethod, string $url, array $headers = [], array $queries = [], array $form_params = [], string $responseClass = DefaultResponse::class)
     {
         $this->response = $responseClass;
 
@@ -33,7 +33,7 @@ final class CurlHttpAdapter implements HttpAdapterInterface
             }
         }
 
-        throw new CurlConnectTimeoutException("Unable to connect to Gomypay. Maximum number of retries (". self::MAX_RETRIES .") reached.");
+        throw new CurlConnectTimeoutException("Unable to connect to Midjourney. Maximum number of retries (". self::MAX_RETRIES .") reached.");
     }
 
     protected function attemptRequest($httpMethod, $url, $headers, $queries)
@@ -80,7 +80,7 @@ final class CurlHttpAdapter implements HttpAdapterInterface
 
             if ($this->isConnectTimeoutError($curlErrorNumber, $executionTime))
             {
-                throw new CurlConnectTimeoutException("Unable to connect to Gomypay. " . $curlErrorMessage);
+                throw new CurlConnectTimeoutException("Unable to connect to Midjourney. " . $curlErrorMessage);
             }
 
             throw new ApiException($curlErrorMessage);
@@ -109,7 +109,7 @@ final class CurlHttpAdapter implements HttpAdapterInterface
         // GUARDS
         if (json_last_error() !== JSON_ERROR_NONE)
         {
-            throw new ApiException("Unable to decode Gomypay response: '{$response}'.");
+            throw new ApiException("Unable to decode Midjourney response: '{$response}'.");
         }
 
         if (isset($body->error))

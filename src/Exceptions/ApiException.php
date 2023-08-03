@@ -1,6 +1,6 @@
 <?php
 
-namespace eDiasoft\Exceptions\Exceptions;
+namespace eDiasoft\Midjourney\Exceptions;
 
 class ApiException extends \Exception
 {

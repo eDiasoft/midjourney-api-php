@@ -13,19 +13,19 @@ class Imagine extends BaseCommand
         $this->payload = array(
             'type'              => 2,
             'application_id'    => Midjourney::APPLICATION_ID,
-            'guild_id'          => '1136502379764777050',
-            'channel_id'        => '1136502842409091152',
-            'session_id'        => 'b9f606d8ef4a54764f3b1cf35cb0ddff',
+            'guild_id'          => $this->config->guildId(),
+            'channel_id'        => $this->config->channelId(),
+            'session_id'        => uniqid(),
             'data'              => [
                 'version'           => '1118961510123847772',
                 'id'                => '938956540159881230',
                 'name'              => 'imagine',
                 'type'              => 1,
-                'options'           => [
+                'options'           => array([
                     "type"      =>  3,
                     "name"      => "prompt",
-                    "value"     => "Draw me a cute tiger that is going for a travel"
-                ]
+                    "value"     => $this->prompt
+                ])
             ],
             "application_command"   =>  [
                 "id"                            =>  "938956540159881230",
@@ -38,12 +38,12 @@ class Imagine extends BaseCommand
                 "description"                   =>  "Create images with Midjourney",
                 "dm_permission"                 =>  true,
                 "contexts"                      =>  [0, 1, 2],
-                "options"                       =>  [
+                "options"                       =>  array([
                     "type"              =>  3,
                     "name"              =>  "prompt",
                     "description"       =>  "The prompt to imagine",
                     "required"          =>  true
-                ]
+                ])
             ],
             'attachments'       => []
         );
