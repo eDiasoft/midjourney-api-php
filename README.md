@@ -43,9 +43,9 @@ You can install the Midjourney PHP API Client Package using Composer. Run the fo
 Create a MidjourneyApiClient object with valid credentials and you will be able to access all the available commands. See the Imagine command down below:
 
 ```php
-use use eDiasoft\Midjourney\MidjourneyApiClient;;
+use use eDiasoft\Midjourney\MidjourneyApiClient;
 
-$channel_id = 000;
+$channel_id = 00000000;
 $authorization = "AUTH_TOKEN";
 
 $midjourney = new MidjourneyApiClient($channel_id, $authorization);
@@ -60,6 +60,7 @@ return $result;
   ![Copy Channel ID](/.github/images/copy_channel_id.png)
 
   If you don't see this menu option you have to enable developer mode. Go to User Settings > Advanced (Under APP Settings) > Developer Mode (Enabled)
+
   ![Discord User Token](/.github/images/discord_developer_mode.png)
 
 - `$authorization` - **Caution:** Discord strictly prohibits the use of automatic user accounts, also known as self-bots. Engaging in such activities can lead to the termination of your Discord account if detected. Therefore, we strongly advise against using self-bots to avoid any potential risks and consequences. Please be mindful of Discord's terms of service and use the platform responsibly and within its allowed guidelines.
@@ -110,3 +111,15 @@ $upscale_builder = $midjourney->upscale($message_id, $upscale_image_id, $interac
 
 $upscaled_image_result = $upscale_builder->send();
 ```
+
+## Documentation
+For detailed information about the available endpoints and their parameters, please refer to the official [Midjourney documentation](https://docs.midjourney.com/).
+
+## Contributing
+We welcome contributions from the community! If you find any issues or have suggestions for improvements, please feel free to open an issue or submit a pull request on our [GitHub repository](https://github.com/eDiasoft/midjourney-api-php).
+
+## License
+This package is open-source and released under the MIT License. Feel free to use and modify it according to your project needs.
+
+## Support
+For any questions or support regarding the Midjourney PHP API Client Package, you can contact us at [support@ediasoft.com](support@ediasoft.com).
