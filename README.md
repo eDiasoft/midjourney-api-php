@@ -56,9 +56,12 @@ return $result;
 ```
 
 ### Constructor
-- `$channel_id` - Go to your discord channels and right click on the channel where the Midjourney Bot is active on. Click on **Copy Channel ID** (If you don't see this menu option you have to enable developer mode.)
+- `$channel_id` - Go to your discord channels and right click on the channel where the Midjourney Bot is active on. Click on **Copy Channel ID**
+  ![Copy Channel ID](/.github/images/copy_channel_id.png)
+  If you don't see this menu option you have to enable developer mode.
   ![Discord User Token](/.github/images/discord_developer_mode.png)
-- `$authorization` - Automatic user accounts (self-bots) are not allowed by Discord and can result in an account termination if found, so use it at your own risk.
 
-  To get your user token, visit [https://discord.com/channels/@me](https://discord.com/channels/@me) and open the **Network** tab inside the **Developers Tools**. Find between your XHR requests the `Authorization` header.
+- `$authorization` - **Caution:** Discord strictly prohibits the use of automatic user accounts, also known as self-bots. Engaging in such activities can lead to the termination of your Discord account if detected. Therefore, we strongly advise against using self-bots to avoid any potential risks and consequences. Please be mindful of Discord's terms of service and use the platform responsibly and within its allowed guidelines.
 
+  To get your user token, go to [https://discord.com/channels/@me](https://discord.com/channels/@me) and open the **Network** tab inside the **Developers Tools** by pressing op F12. Locate the calls that is directing to the Discord API such as `friend-suggestions` and open the Request Headers tab and locate the `Authorization` and copy this value.
+  ![Discord User Token](/.github/images/authorization_header.png)
