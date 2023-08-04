@@ -50,7 +50,7 @@ $authorization = "AUTH_TOKEN";
 
 $midjourney = new MidjourneyApiClient($channel_id, $authorization);
 
-$result = $midjourney->imagine('Elephant riding on a snake')->send();
+$result = $midjourney->imagine('Elephant and a snake romantically having a diner')->send();
 
 return $result;
 ```
@@ -58,10 +58,55 @@ return $result;
 ### Constructor
 - `$channel_id` - Go to your discord channels and right click on the channel where the Midjourney Bot is active on. Click on **Copy Channel ID**
   ![Copy Channel ID](/.github/images/copy_channel_id.png)
-  If you don't see this menu option you have to enable developer mode.
+
+  If you don't see this menu option you have to enable developer mode. Go to User Settings > Advanced (Under APP Settings) > Developer Mode (Enabled)
   ![Discord User Token](/.github/images/discord_developer_mode.png)
 
 - `$authorization` - **Caution:** Discord strictly prohibits the use of automatic user accounts, also known as self-bots. Engaging in such activities can lead to the termination of your Discord account if detected. Therefore, we strongly advise against using self-bots to avoid any potential risks and consequences. Please be mindful of Discord's terms of service and use the platform responsibly and within its allowed guidelines.
 
   To get your user token, go to [https://discord.com/channels/@me](https://discord.com/channels/@me) and open the **Network** tab inside the **Developers Tools** by pressing op F12. Locate the calls that is directing to the Discord API such as `friend-suggestions` and open the Request Headers tab and locate the `Authorization` and copy this value.
-  ![Discord User Token](/.github/images/authorization_header.png)
+
+  ![Discord User Token](/.github/images/authorization_header.jpg)
+
+### Commands
+
+#### Imagine
+
+```php
+$imagine_builder = $midjourney->imagine('Elephant and a snake romantically having a diner'); //Returns a Builder object
+```
+##### Parameters
+
+```php
+$imagine_builder->aspectRatio('16:9') //Changing the aspect ratio.
+                ->chaos(30) //The higher the chaos the more unusual and unexpected results.
+                ->fast() //Enable fast mode for this single job.
+                ->imageWeight(1.75) //Sets image prompt weight relative to text weight. The default value is 1.
+                ->no('moon roses') //Exclude specific object in the image.
+                ->quality(0.5)
+                ->relax() //This will turn on relax mode for this single job, the interval of retrieving the image will be also delayed. 
+                ->repeat(40) //Create multiple Jobs from a single prompt.
+                ->seed(1000) //The Midjourney bot uses a seed number to create a field of visual noise, like television static, as a starting point to generate the initial image grids.
+                ->stop(35) //Stopping a Job at an earlier percentage can create blurrier, less detailed results.
+                ->style('cute')
+                ->stylize(5) //Influences how strongly Midjourney's default aesthetic style is applied
+                ->tile() //Generates images that can be used as repeating tiles to create seamless patterns.
+                ->turbo() //Override your current setting and run a single job using Turbo Mode.
+                ->weird(1000); //Explore unusual aesthetics with the experimental weird parameter
+
+$result = $imagine_builder->send()
+```
+
+[Check the documentation for the complete explanation.](https://docs.midjourney.com/docs/parameter-list)
+
+#### Upcale
+
+```php
+$message_id = "1234"
+$upscale_image_id = "MJ::JOB::upsample::1::xxxxx";
+$interaction_id = $result->interactionId() //You can retrieve this ID after the imagine interaction is performed, this is a identifier for the specific job request.
+
+$upscale_builder = $midjourney->upscale($message_id, $upscale_image_id, $interaction_id); //Returns a Builder object
+
+$upscaled_image_result = $upscale_builder->send();
+```

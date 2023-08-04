@@ -14,7 +14,7 @@ class Upscale extends BaseCommand
     private int $maxRetries = 10;
     private int $intervalSeconds = 10;
 
-    public function __construct(Config $config, string $messageId, string $interactionId, string $customId)
+    public function __construct(Config $config, string $messageId, string $customId, string $interactionId = null)
     {
         parent::__construct($config);
 
