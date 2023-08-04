@@ -14,6 +14,7 @@ class BaseCommand implements Builder
     protected array $arguments = [];
     protected array $payload;
     protected string $interactionId;
+    protected int $type = 2;
 
     public function __construct(Config $config, string $prompt = '')
     {
@@ -31,7 +32,7 @@ class BaseCommand implements Builder
     public function defaultPayload()
     {
         $this->payload = array(
-            'type'              => 2,
+            'type'              => $this->type,
             'application_id'    => Midjourney::APPLICATION_ID,
             'guild_id'          => $this->config->guildId(),
             'channel_id'        => $this->config->channelId(),
@@ -42,17 +43,20 @@ class BaseCommand implements Builder
         return $this;
     }
 
-    public function payload(): string
+    public function payload(): array
     {
-        return json_encode($this->payload);
+        return $this->payload;
+    }
+
+    public function interactionId()
+    {
+        return $this->interactionId;
     }
 
     public function send()
     {
         return $this->client->setHeaders([
-            'Content-Type'  => 'application/x-www-form-urlencoded'
-        ])->post(Discord::INTERACTIONS_URL, [
-            'payload_json'      => $this->payload()
-        ]);
+            'Content-Type'  => 'application/json'
+        ])->post(Discord::INTERACTIONS_URL, json: $this->payload());
     }
 }

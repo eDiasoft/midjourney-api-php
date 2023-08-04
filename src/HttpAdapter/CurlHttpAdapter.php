@@ -18,7 +18,7 @@ final class CurlHttpAdapter implements HttpAdapterInterface
     public const DELAY_INCREASE_MS = 1000;
     private string $response;
 
-    public function send(string $httpMethod, string $url, array $headers = [], array $queries = [], array $form_params = [], string $responseClass = DefaultResponse::class)
+    public function send(string $httpMethod, string $url, array $headers = [], array $queries = [], ?array $form_params = null, ?array $json = null, string $responseClass = DefaultResponse::class)
     {
         $this->response = $responseClass;
 

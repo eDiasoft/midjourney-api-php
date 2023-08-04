@@ -27,7 +27,7 @@ class GuzzleHttpAdapter implements HttpAdapterInterface
         $this->httpClient = $httpClient;
     }
 
-    public function send(string $httpMethod, string $url, array $headers = [], array $queries = [], array $form_params = [], string $responseClass = DefaultResponse::class)
+    public function send(string $httpMethod, string $url, array $headers = [], array $queries = [], ?array $form_params = null, ?array $json = null, string $responseClass = DefaultResponse::class)
     {
         $request = new Request($httpMethod, $url, $headers);
 
@@ -37,10 +37,10 @@ class GuzzleHttpAdapter implements HttpAdapterInterface
             $response = $this->httpClient->send($request, [
                 'http_errors'           => false,
                 'query'                 => $queries,
-                'form_params'           => $form_params
+                'form_params'           => $form_params,
+                'json'                  => $json
             ]);
         } catch (GuzzleException $e) {
-
             throw new ApiException($e->getMessage(), $e->getCode());
         }
 

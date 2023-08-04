@@ -2,13 +2,17 @@
 
 namespace eDiasoft\Midjourney\Commands;
 
+use eDiasoft\Midjourney\Exceptions\MidjourneyException;
+use eDiasoft\Midjourney\Resources\Discord;
 use eDiasoft\Midjourney\Resources\Midjourney;
 
 class Imagine extends BaseCommand
 {
+    private int $maxRetries = 10;
+    private int $intervalSeconds = 10;
     protected array $payload;
 
-    public function payload(): string
+    public function payload(): array
     {
         $this->payload = array_merge($this->payload, array(
             'data'              => [
@@ -63,6 +67,8 @@ class Imagine extends BaseCommand
     {
         $this->arguments[] = "--fast";
 
+        $this->intervalSeconds = 30;
+
         return $this;
     }
 
@@ -90,6 +96,8 @@ class Imagine extends BaseCommand
     public function relax()
     {
         $this->arguments[] = "--relax";
+
+        $this->intervalSeconds = 60;
 
         return $this;
     }
@@ -140,6 +148,8 @@ class Imagine extends BaseCommand
     {
         $this->arguments[] = "--turbo";
 
+        $this->intervalSeconds = 15;
+
         return $this;
     }
 
@@ -150,8 +160,42 @@ class Imagine extends BaseCommand
         return $this;
     }
 
+    public function setMaxRetries(int $maxRetries)
+    {
+        $this->maxRetries = $maxRetries;
+
+        return $this;
+    }
+
     public function send()
     {
         parent::send();
+
+        return $this->retrieveGeneratedImage();
+    }
+
+    private function retrieveGeneratedImage($tries = 0)
+    {
+        if($tries <= $this->maxRetries)
+        {
+            sleep($this->intervalSeconds);
+
+            $response = $this->client->get(Discord::CHANNELS_URL . '/' . $this->config->channelId() . '/messages');
+            $re = '/(.*)(\[(.*)\])(.*)/m';
+
+            foreach($response->body() as $message)
+            {
+                preg_match($re, $message['content'], $matches);
+
+                if(isset($matches[3]) && $matches[3] == $this->interactionId && !empty($message['attachments']) && !str_contains($message['attachments'][0]['filename'], 'grid'))
+                {
+                    return $message;
+                }
+            }
+
+            return $this->retrieveGeneratedImage($tries + 1);
+        }
+
+        throw new MidjourneyException('Max tries exceeded, increase the max try attempt ($midjourney->imagine(*)->setMaxRetries(30)) or check your discord what went wrong.');
     }
 }

@@ -27,8 +27,8 @@ class MidjourneyApiClient
         return new Info($this->config);
     }
 
-    public function upscale()
+    public function upscale($messageId, $interactionId, $customId)
     {
-        return new Upscale($this->config);
+        return new Upscale($this->config, $messageId, $interactionId, $customId);
     }
 }

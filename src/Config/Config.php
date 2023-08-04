@@ -1,7 +1,7 @@
 <?php
 namespace eDiasoft\Midjourney\Config;
 
-use eDiasoft\Exceptions\Exceptions\MidjourneyException;
+use eDiasoft\Midjourney\Exceptions\MidjourneyException;
 use eDiasoft\Midjourney\HttpAdapter\Client;
 use eDiasoft\Midjourney\Resources\Discord;
 

@@ -32,8 +32,8 @@ class Client
         return $this->httpClient->send(Http::GET, $url, $this->headers, $queries);
     }
 
-    public function post($url, $body = [])
+    public function post($url, ?array $form_params = null, ?array $json = null)
     {
-        return $this->httpClient->send(Http::POST, $url, $this->headers, form_params: $body);
+        return $this->httpClient->send(Http::POST, $url, $this->headers, form_params: $form_params, json: $json);
     }
 }
