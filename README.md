@@ -122,4 +122,4 @@ We welcome contributions from the community! If you find any issues or have sugg
 This package is open-source and released under the MIT License. Feel free to use and modify it according to your project needs.
 
 ## Support
-For any questions or support regarding the Midjourney PHP API Client Package, you can contact us at [support@ediasoft.com](support@ediasoft.com).
+For any questions or support regarding the Midjourney PHP API Client Package, you can contact us at [support@ediasoft.com](mailto:support@ediasoft.com).
