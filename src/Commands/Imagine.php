@@ -174,6 +174,11 @@ class Imagine extends BaseCommand
         return $this->retrieveGeneratedImage();
     }
 
+    public function prompt()
+    {
+        return $this->prompt. ' ' . implode(' ', $this->arguments);
+    }
+
     private function retrieveGeneratedImage($tries = 0)
     {
         if($tries <= $this->maxRetries)
