@@ -4,6 +4,8 @@ namespace eDiasoft\Midjourney;
 
 
 use eDiasoft\Midjourney\Commands\Imagine;
+use eDiasoft\Midjourney\Commands\Info;
+use eDiasoft\Midjourney\Commands\Upscale;
 use eDiasoft\Midjourney\Config\Config;
 use eDiasoft\Midjourney\Config\DefaultConfig;
 
@@ -18,5 +20,15 @@ class MidjourneyApiClient
     public function imagine($prompt)
     {
         return new Imagine($this->config, $prompt);
+    }
+
+    public function info()
+    {
+        return new Info($this->config);
+    }
+
+    public function upscale()
+    {
+        return new Upscale($this->config);
     }
 }
