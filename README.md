@@ -43,7 +43,7 @@ You can install the Midjourney PHP API Client Package using Composer. Run the fo
 Create a MidjourneyApiClient object with valid credentials and you will be able to access all the available commands. See the Imagine command down below:
 
 ```php
-use use eDiasoft\Midjourney\MidjourneyApiClient;
+use eDiasoft\Midjourney\MidjourneyApiClient;
 
 $channel_id = 00000000;
 $authorization = "AUTH_TOKEN";
@@ -103,11 +103,12 @@ $result = $imagine_builder->send()
 #### Upcale
 
 ```php
-$message_id = "1234"
-$upscale_image_id = "MJ::JOB::upsample::1::xxxxx";
-$interaction_id = $result->interactionId() //You can retrieve this ID after the imagine interaction is performed, this is a identifier for the specific job request.
+// You this information from the value of $result after the imagine interaction is performed.
+preg_match('/\[(.*?)\]/', $result['content'], $matches);
 
-$upscale_builder = $midjourney->upscale($message_id, $upscale_image_id, $interaction_id); //Returns a Builder object
+$message_id = $result['id'];
+$upscale_image_id = $result['components'][0]['components'][2]['custom_id'];
+$interaction_id = $matches[1];
 
 $upscaled_image_result = $upscale_builder->send();
 ```
