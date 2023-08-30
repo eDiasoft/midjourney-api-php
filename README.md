@@ -119,6 +119,8 @@ $message_id = $result['id'];
 $upscale_image_id = $result['components'][0]['components'][$upscale_image]['custom_id'];
 
 $upscale_result = $midjourney->upscale($message_id, $upscale_image_id, $interaction_id)->send();
+
+return $upscaleResult['attachments'][0]['url']; // Return URL of upscaled image
 ```
 
 ## Documentation
