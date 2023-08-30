@@ -110,7 +110,7 @@ $message_id = $result['id'];
 $upscale_image_id = $result['components'][0]['components'][2]['custom_id'];
 $interaction_id = $matches[1];
 
-$upscaled_image_result = $upscale_builder->send();
+$upscale_result = $midjourney->upscale($message_id, $upscale_image_id, $interaction_id)->send();
 ```
 
 ## Documentation
