@@ -110,13 +110,13 @@ $midjourney = new MidjourneyApiClient($channel_id, $authorization);
 $result = $midjourney->imagine('Elephant and a snake romantically having a diner')->send();
 
 // After the initial imagine interaction has completed, we can use the result to request an upscaled version.
-preg_match('/\[(.*?)\]/', $result['content'], $matches);
-
 $upscale_image = 3; // Select the 3rd generated image for upscaling
 
+preg_match('/\[(.*?)\]/', $result['content'], $matches);
+
+$interaction_id = $matches[1];
 $message_id = $result['id'];
 $upscale_image_id = $result['components'][0]['components'][$upscale_image]['custom_id'];
-$interaction_id = $matches[1];
 
 $upscale_result = $midjourney->upscale($message_id, $upscale_image_id, $interaction_id)->send();
 ```
