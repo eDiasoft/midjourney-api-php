@@ -43,7 +43,7 @@ You can install the Midjourney PHP API Client Package using Composer. Run the fo
 Create a MidjourneyApiClient object with valid credentials and you will be able to access all the available commands. See the Imagine command down below:
 
 ```php
-use use eDiasoft\Midjourney\MidjourneyApiClient;
+use eDiasoft\Midjourney\MidjourneyApiClient;
 
 $channel_id = 00000000;
 $authorization = "AUTH_TOKEN";
@@ -103,13 +103,23 @@ $result = $imagine_builder->send()
 #### Upcale
 
 ```php
-$message_id = "1234"
-$upscale_image_id = "MJ::JOB::upsample::1::xxxxx";
-$interaction_id = $result->interactionId() //You can retrieve this ID after the imagine interaction is performed, this is a identifier for the specific job request.
+use use eDiasoft\Midjourney\MidjourneyApiClient;
 
-$upscale_builder = $midjourney->upscale($message_id, $upscale_image_id, $interaction_id); //Returns a Builder object
+$midjourney = new MidjourneyApiClient($channel_id, $authorization);
 
-$upscaled_image_result = $upscale_builder->send();
+$prompt = $midjourney->imagine('Elephant and a snake romantically having a diner');
+$result = $prompt->send();
+
+// After the initial imagine interaction has completed, we can use the result to request an upscaled version.
+$upscale_image = 3; // Select the 3rd generated image for upscaling
+
+$message_id = $result['id'];
+$upscale_image_id = $result['components'][0]['components'][$upscale_image]['custom_id'];
+$interaction_id = $prompt->interactionId();
+
+$upscale_result = $midjourney->upscale($message_id, $upscale_image_id, $interaction_id)->send();
+
+return $upscaleResult['attachments'][0]['url']; // Return URL of upscaled image
 ```
 
 ## Documentation
