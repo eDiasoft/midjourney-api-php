@@ -4,7 +4,6 @@ namespace eDiasoft\Midjourney\HttpAdapter;
 
 use eDiasoft\Midjourney\Config\Config;
 use eDiasoft\Midjourney\Resources\Http;
-use eDiasoft\Midjourney\Response\Transaction;
 
 class Client
 {
