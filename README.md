@@ -43,7 +43,7 @@ You can install the Midjourney PHP API Client Package using Composer. Run the fo
 Create a MidjourneyApiClient object with valid credentials and you will be able to access all the available commands. See the Imagine command down below:
 
 ```php
-use use eDiasoft\Midjourney\MidjourneyApiClient;
+use eDiasoft\Midjourney\MidjourneyApiClient;
 
 $channel_id = 00000000;
 $authorization = "AUTH_TOKEN";
