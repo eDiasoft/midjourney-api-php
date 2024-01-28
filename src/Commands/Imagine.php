@@ -21,28 +21,29 @@ class Imagine extends BaseCommand
                 'name'              => 'imagine',
                 'type'              => 1,
                 'options'           => array([
-                    "type"      =>  3,
-                    "name"      => "prompt",
-                    "value"     => $this->prompt. ' [' . $this->interactionId . '] ' . implode(' ', $this->arguments)
-                ])
-            ],
-            "application_command"   =>  [
-                "id"                            =>  Midjourney::IMAGINE_DATA_ID,
-                "application_id"                =>  Midjourney::APPLICATION_ID,
-                "version"                       =>  Midjourney::IMAGINE_DATA_VERSION,
-                "default_member_permissions"    =>  null,
-                "type"                          =>  1,
-                "nsfw"                          =>  false,
-                "name"                          =>  "imagine",
-                "description"                   =>  "Create images with Midjourney",
-                "dm_permission"                 =>  true,
-                "contexts"                      =>  [0, 1, 2],
-                "options"                       =>  array([
-                    "type"              =>  3,
-                    "name"              =>  "prompt",
-                    "description"       =>  "The prompt to imagine",
-                    "required"          =>  true
-                ])
+                    'type'      =>  3,
+                    'name'      => 'prompt',
+                    'value'     => $this->prompt. ' [' . $this->interactionId . '] ' . implode(' ', $this->arguments)
+                ]),
+                'application_command'   =>  [
+                    'id'                            =>  Midjourney::IMAGINE_DATA_ID,
+                    'application_id'                =>  Midjourney::APPLICATION_ID,
+                    'version'                       =>  Midjourney::IMAGINE_DATA_VERSION,
+                    'default_member_permissions'    =>  null,
+                    'type'                          =>  1,
+                    'nsfw'                          =>  false,
+                    'name'                          =>  'imagine',
+                    'description'                   =>  'Create images with Midjourney',
+                    'dm_permission'                 =>  true,
+                    'integration_types'             =>  [0],
+                    'attachments'                   => [],
+                    'options'                       =>  array([
+                        'type'              =>  3,
+                        'name'              =>  'prompt',
+                        'description'       =>  'The prompt to imagine',
+                        'required'          =>  true
+                    ])
+                ]
             ]
         ));
 

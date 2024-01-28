@@ -9,6 +9,7 @@ use eDiasoft\Midjourney\Resources\Midjourney;
 
 class BaseCommand implements Builder
 {
+    protected Client $client;
     protected Config $config;
     protected string $prompt;
     protected array $arguments = [];
@@ -32,12 +33,14 @@ class BaseCommand implements Builder
     public function defaultPayload()
     {
         $this->payload = array(
-            'type'              => $this->type,
-            'application_id'    => Midjourney::APPLICATION_ID,
-            'guild_id'          => $this->config->guildId(),
-            'channel_id'        => $this->config->channelId(),
-            'session_id'        => uniqid(),
-            'attachments'       => []
+            'type'                  => $this->type,
+            'application_id'        => Midjourney::APPLICATION_ID,
+            'guild_id'              => $this->config->guildId(),
+            'channel_id'            => $this->config->channelId(),
+            'session_id'            => uniqid(),
+            "nonce"                 => $this->interactionId,
+            "analytics_location"    => "slash_ui",
+            'attachments'           => []
         );
 
         return $this;

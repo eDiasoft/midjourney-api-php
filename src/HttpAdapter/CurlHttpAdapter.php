@@ -27,7 +27,7 @@ final class CurlHttpAdapter implements HttpAdapterInterface
             usleep($i * self::DELAY_INCREASE_MS);
 
             try {
-                return $this->attemptRequest($httpMethod, $url, $headers, $queries);
+                return $this->attemptRequest($httpMethod, $url, $headers, $queries, $form_params, $json);
             } catch (CurlConnectTimeoutException $e) {
                 //
             }
@@ -36,7 +36,7 @@ final class CurlHttpAdapter implements HttpAdapterInterface
         throw new CurlConnectTimeoutException("Unable to connect to Midjourney. Maximum number of retries (". self::MAX_RETRIES .") reached.");
     }
 
-    protected function attemptRequest($httpMethod, $url, $headers, $queries)
+    protected function attemptRequest($httpMethod, $url, $headers, $queries, $form_params, $json)
     {
         $curl = curl_init($url);
 
@@ -53,7 +53,22 @@ final class CurlHttpAdapter implements HttpAdapterInterface
                 break;
             case HTTP::POST:
                 curl_setopt($curl, CURLOPT_POST, true);
-                curl_setopt($curl, CURLOPT_POSTFIELDS,  $queries);
+
+                if(!empty($queries))
+                {
+                    curl_setopt($curl, CURLOPT_POSTFIELDS,  $queries);
+                }
+
+                if(!empty($form_params))
+                {
+                    curl_setopt($curl, CURLOPT_POSTFIELDS,  $form_params);
+                }
+
+                if(!empty($json))
+                {
+                    curl_setopt($curl, CURLOPT_POSTFIELDS,  json_encode($json));
+                }
+
                 break;
             case HTTP::PATCH:
                 curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'PATCH');
@@ -119,7 +134,7 @@ final class CurlHttpAdapter implements HttpAdapterInterface
 
         if ($statusCode >= 400)
         {
-            $message = "Error executing API call ({$body->status}: {$body->title}): {$body->detail}";
+            $message = "Error executing API call: " . $body['message'] ?? '';
 
             $field = null;
 
