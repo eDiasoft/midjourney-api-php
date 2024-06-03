@@ -31,17 +31,22 @@ class Imagine extends BaseCommand
                     'version'                       =>  Midjourney::IMAGINE_DATA_VERSION,
                     'default_member_permissions'    =>  null,
                     'type'                          =>  1,
-                    'nsfw'                          =>  false,
                     'name'                          =>  'imagine',
                     'description'                   =>  'Create images with Midjourney',
                     'dm_permission'                 =>  true,
-                    'integration_types'             =>  [0],
+                    'integration_types'             =>  [0, 1],
                     'attachments'                   => [],
+                    'contexts'                      => [0, 1, 2],
+                    'global_popularity_rank'        => 1,
+                    'description_localized'         => 'Create images with Midjourney',
+                    'name_localized'                => 'imagine',
                     'options'                       =>  array([
-                        'type'              =>  3,
-                        'name'              =>  'prompt',
-                        'description'       =>  'The prompt to imagine',
-                        'required'          =>  true
+                        'type'                  =>  3,
+                        'name'                  =>  'prompt',
+                        'description'           =>  'The prompt to imagine',
+                        'required'              =>  true,
+                        "description_localized" => "The prompt to imagine",
+                        "name_localized"        => "prompt"
                     ])
                 ]
             ]
