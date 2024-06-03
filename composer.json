@@ -2,7 +2,7 @@
     "name": "ediasoft/midjourney-api-php",
     "description": "Midjourney API PHP Client for PHP.",
     "license": "MIT",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "type": "library",
     "require": {
         "php": "^8.0",
