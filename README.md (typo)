@@ -103,9 +103,9 @@ $result = $imagine_builder->send()
 #### Upcale
 
 ```php
-$message_id = "1234"
+$message_id = "1234";
 $upscale_image_id = "MJ::JOB::upsample::1::xxxxx";
-$interaction_id = $result->interactionId() //You can retrieve this ID after the imagine interaction is performed, this is a identifier for the specific job request.
+$interaction_id = $imagine_builder->interactionId(); //You can retrieve this ID after the imagine interaction is performed, this is a identifier for the specific job request.
 
 $upscale_builder = $midjourney->upscale($message_id, $upscale_image_id, $interaction_id); //Returns a Builder object
 
