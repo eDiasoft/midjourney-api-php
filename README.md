@@ -103,7 +103,7 @@ $result = $imagine_builder->send()
 #### Upcale
 
 ```php
-$message_id = "1234"
+$message_id = "1234";
 $upscale_image_id = "MJ::JOB::upsample::1::xxxxx";
 $interaction_id = $result->interactionId() //You can retrieve this ID after the imagine interaction is performed, this is a identifier for the specific job request.
 
